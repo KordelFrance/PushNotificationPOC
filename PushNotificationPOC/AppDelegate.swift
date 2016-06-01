@@ -28,6 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
+        //Kordel - this is for local notification
+        let date = NSDate(timeIntervalSinceNow: 10)
+        let localNotification = UILocalNotification()
+        localNotification.fireDate = date
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        localNotification.alertBody = "TEST NOTIFICATION FOR PARSE"
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        
+        
+        
         return true
     }
 
@@ -62,6 +73,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         PFPush.handlePush(userInfo)
+    }
+    
+    //Kordel - this is local notification
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("Test notification received \(notification)")
     }
 
 }
